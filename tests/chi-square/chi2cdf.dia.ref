@@ -1,0 +1,67 @@
+// Copyright (C) 2012 - Prateek Papriwal
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at
+// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+// <-- JVM NOT MANDATORY -->
+// <-- ENGLISH IMPOSED -->
+//
+// Test distfun_chi2cdf
+//
+// Check empty matrix
+p = distfun_chi2cdf([],[]);
+assert_checkequal(p,[]);
+// Test with x scalar, k scalar
+computed = distfun_chi2cdf(4,5);
+expected = 0.4505840;
+assert_checkalmostequal(computed,expected,1.e-6);
+//
+//Test with expanded x, k scalar
+computed = distfun_chi2cdf([2 6],5);
+expected = [0.1508550 0.6937811];
+assert_checkalmostequal(computed,expected,1.e-6);
+//
+// Test with x scalar, k expanded
+computed = distfun_chi2cdf(4,[4 7]);
+expected = [0.5939942 0.2202226];
+assert_checkalmostequal(computed,expected,1.e-6);
+// 
+// Test with both x,k expanded
+computed = distfun_chi2cdf([2 6],[3 4]);
+expected = [0.4275933 0.8008517];
+assert_checkalmostequal(computed,expected,1.e-6);
+// Check vectorisation
+k = 6;
+x = linspace(0.1,20,10);
+p = distfun_chi2cdf ( x ,k);
+p2 = [];
+for i = 1 : 10
+    p2(1,i) = distfun_chi2cdf ( x(i) , k );
+end
+assert_checkequal(p,p2);
+// Accuracy test using data in chi2pdf.R.dataset.csv file
+precision = 1.e-13;
+path=distfun_getpath();
+dataset = fullfile(path,"tests","unit_tests","chi-square","chi2pdf.R.dataset.csv");
+table = assert_csvread ( dataset , "," , [] , "/#(.*)/" );
+table = evstr(table);
+ntests = size(table,"r");
+for i = 1 : ntests
+  x = table(i,1);
+  k = table(i,2);
+  expected = table(i,4);
+  computed = distfun_chi2cdf(x,k);
+  assert_checkalmostequal ( computed , expected , precision );
+  // Compute number of significant digits
+  if ( %f ) then
+    d = assert_computedigits ( computed , expected );
+    mprintf("Test #%d/%d: Digits = %.1f\n",i,ntests,d);
+  end
+end
+// Check upper tail
+p = distfun_chi2cdf(3,5);
+assert_checkalmostequal(p,0.3000142,1.e-6);
+p = distfun_chi2cdf(3,5,%f);
+assert_checkalmostequal(p,0.6999858,1.e-6);

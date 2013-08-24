@@ -1,0 +1,24 @@
+# Copyright (C) 2012 - Prateek Papriwal 
+
+# This file must be used under the terms of the CeCILL.
+# This source file is licensed as described in the file COPYING which
+# you should have received as part of this distribution.  The terms
+# are also available at
+# http:#www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+# <-- JVM NOT MANDATORY -->
+
+
+# Assessing the quality of the Inverse binomial cumulative distribution function
+# Table of inputs computed using R software
+# [ p N pr iCDF ]
+
+0.1 1030.0 0.5 494.0
+0.4 1030.0 0.5 511.0
+0.01 1030.00 0.50 478.00
+0.9 30.0 0.1 5.0
+0.990 30.000 0.999 30.000
+0.6000 240.0000 0.9999 240.0000
+0.11 100.00 0.22 17.00
+0.9999 1000.0000 0.7100 762.0000
+
