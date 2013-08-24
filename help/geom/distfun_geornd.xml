@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ *
+ * This help file was generated from distfun_geornd.sci using help_from_sci().
+ *
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="distfun_geornd" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+
+  <refnamediv>
+    <refname>distfun_geornd</refname><refpurpose>Geometric random numbers</refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   R = distfun_geornd(pr)
+   R = distfun_geornd(pr,v)
+   R = distfun_geornd(pr,m,n)
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>pr :</term>
+      <listitem><para> a 1x1 or nxm matrix of doubles, the probability of getting success in a Bernoulli trial</para></listitem></varlistentry>
+   <varlistentry><term>v :</term>
+      <listitem><para> a 1x2 or 2x1 matrix of doubles, the size of R</para></listitem></varlistentry>
+   <varlistentry><term>v(1) :</term>
+      <listitem><para> the number of rows of R</para></listitem></varlistentry>
+   <varlistentry><term>v(2) :</term>
+      <listitem><para> the number of columns of R</para></listitem></varlistentry>
+   <varlistentry><term>m :</term>
+      <listitem><para> a 1x1 matrix of floating point integers, the number of rows of R</para></listitem></varlistentry>
+   <varlistentry><term>n :</term>
+      <listitem><para> a 1x1 matrix of floating point integers, the number of columns of R</para></listitem></varlistentry>
+   <varlistentry><term>R:</term>
+      <listitem><para> a matrix of doubles, the random numbers in the set {0,1,2,3,...}.</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+Generates random variables from the Geometric distribution function.
+   </para>
+   <para>
+Any scalar input argument is expanded to a matrix of doubles
+of the same size as the other input arguments.
+   </para>
+   <para>
+As a side effect, it modifies the internal seed of the grand function.
+   </para>
+   <para>
+Note - The output argument R belongs to the set {0,1,2,3,...}.
+This is not compatible with the <literal>grand(m,n,"geom",p)</literal> function in Scilab v5,
+where the choice is the set {1,2,3,...}.
+In other words, the calling sequence
+   </para>
+   <para>
+<screen>
+R = grand(m,n,"geom",pr)
+</screen>
+   </para>
+   <para>
+is equivalent to
+   </para>
+   <para>
+<screen>
+R = distfun_geornd(pr,m,n) + 1
+</screen>
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+// set the initial seed for tests
+distfun_seedset(1);
+// Test with expanded pr
+computed = distfun_geornd(1 ./(1:6))
+expected = [1 0 14 4 12 0];
+
+// Check expansion of pr in R = distfun_geornd(pr)
+distfun_seedset(1);
+N = 10;
+computed = distfun_geornd(1 ./(1:6))
+
+// Check R = distfun_geornd(pr,v)
+computed = distfun_geornd(0.2,[4 5])
+
+// Check mean and variance
+N = 5000;
+pr = 0.3;
+R = distfun_geornd(pr,[1 N]);
+RM = mean(R)
+RV = variance(R)
+[M,V] = distfun_geostat(pr)
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Bibliography</title>
+   <para>http://en.wikipedia.org/wiki/Geometric_distribution</para>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Copyright (C) 2012 - Prateek Papriwal</member>
+   </simplelist>
+</refsection>
+</refentry>

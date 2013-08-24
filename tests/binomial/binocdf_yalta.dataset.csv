@@ -1,0 +1,33 @@
+# Copyright (C) 2012 - Prateek Papriwal 
+
+# This file must be used under the terms of the CeCILL.
+# This source file is licensed as described in the file COPYING which
+# you should have received as part of this distribution.  The terms
+# are also available at
+# http:#www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+# <-- JVM NOT MANDATORY -->
+
+
+# Assessing the quality of the Binomial distribution function
+# Reference
+"#The accuracy of statistical distributions in Microsoft  Excel 2007, "
+"#A. Talha Yalta, Computational Statistics and Data Analysis 52 (2008) 4579–4586"
+
+# Table of inputs from Yalta
+# [ x N pr CDF-P ]
+
+1 1030 0.5 8.96114E-308
+2 1030 0.5 4.61499E-305
+100 1030 0.5 1.39413E-169
+200 1030 0.5 5.45781E-92
+300 1030 0.5 2.91621E-42
+390 1030 0.5 3.18196E-15
+391 1030 0.5 5.24099E-15
+400 1030 0.5 0.000000000000389735
+410 1030 0.5 0.0000000000319438
+420 1030 0.5 0.00000000176037
+500 1030 0.5 0.183106
+550 1030 0.5 0.98655
+575 1030 0.5 0.99992
+589 1030 0.5 0.999998

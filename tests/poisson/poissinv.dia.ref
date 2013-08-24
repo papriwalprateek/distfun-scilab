@@ -1,0 +1,47 @@
+// Copyright (C) 2012 - Prateek Papriwal
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at
+// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+// <-- JVM NOT MANDATORY -->
+//
+// Check empty matrix
+x = distfun_poissinv ( [] , []);
+assert_checkequal ( x , [] );
+// Test with p scalar, lambda scalar
+x = distfun_poissinv(0.999,5);
+expected = 13;
+assert_checkalmostequal(x,expected,%eps);
+x = distfun_poissinv(1-0.999,5,%f);
+expected = 13;
+assert_checkalmostequal(x,expected,%eps);
+//
+// Test with expanded p , scalar lambda
+x = distfun_poissinv([0.32 0.3],2);
+expected = [1. 1.];
+assert_checkalmostequal(x,expected,%eps);
+//
+// Test with scalar p, expanded lambda
+x = distfun_poissinv(0.22,[3 2]);
+expected = [2. 1.];
+assert_checkalmostequal(x,expected,%eps);
+//
+//
+// Test small values of p
+// TODO : fix bug http://forge.scilab.org/index.php/p/distfun/issues/831/
+//x = distfun_poissinv(1.e-15,1);
+//expected = 0.;
+//x = distfun_poissinv(1.e-15,1,%f)
+//expected = 17.;
+//
+// Check vectorisation
+//lambda = 3;
+//p = linspace(0.1,0.9,10);
+//x = distfun_poissinv(p,lambda);
+//x2 = [];
+//for i=1:10
+//    x2(1,i) = distfun_poissinv(x(i),lambda);
+//end
+//assert_checkalmostequal(x,x2);
