@@ -1,0 +1,71 @@
+// Copyright (C) 2012 - Prateek Papriwal
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at
+// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+// <-- JVM NOT MANDATORY -->
+// <-- ENGLISH IMPOSED -->
+//
+// Test distfun_chi2pdf
+//
+// Check empty matrix
+p = distfun_chi2pdf([],[]);
+assert_checkequal(p,[]);
+// Test with x scalar, k scalar
+ computed = distfun_chi2pdf(4,5);
+ expected = 0.1439759;
+ assert_checkalmostequal(computed,expected,1.e-7);
+// Test with expanded x, k scalar
+ computed = distfun_chi2pdf([2 6],5);
+ expected = [0.1383692 0.0973043];
+ assert_checkalmostequal(computed,expected,1.e-6);
+//
+// Test with x scalar, k expanded
+ computed = distfun_chi2pdf(4,[4 7]);
+ expected = [0.1353353 0.1151807];
+ assert_checkalmostequal(computed,expected,1.e-6);
+// 
+// Test with both x,k expanded
+ computed = distfun_chi2pdf([2 6],[3 4]);
+ expected = [0.2075537 0.0746806];
+ assert_checkalmostequal(computed,expected,1.e-6);
+// Check vectorisation
+k = 3;
+x = linspace(1,100,100);
+p = distfun_chi2pdf(x,k);
+p2 = [];
+for i = 1:100
+    p2(1,i) = distfun_chi2pdf(x(i),k);
+end
+// Accuracy test using data in chi2pdf.R.dataset.csv file
+precision = 1.e-13;
+path=distfun_getpath();
+dataset = fullfile(path,"tests","unit_tests","chi-square","chi2pdf.R.dataset.csv");
+table = assert_csvread ( dataset , "," , [] , "/#(.*)/" );
+table = evstr(table);
+ntests = size(table,"r");
+for i = 1 : ntests
+  x = table(i,1);
+  k = table(i,2);
+  expected = table(i,3);
+  computed = distfun_chi2pdf(x,k);
+  assert_checkalmostequal ( computed , expected , precision );
+  // Compute number of significant digits
+  if ( %f ) then
+    d = assert_computedigits ( computed , expected );
+    mprintf("Test #%d/%d: Digits = %.1f\n",i,ntests,d);
+  end
+end
+// Check consistency CDF/PDF
+n = 100;
+k = 5;
+p = linspace(0.01,0.99,n)';
+x = distfun_chi2inv(p,k);
+p1 = distfun_chi2pdf(x,k);
+p2 = [];
+for i = 1 : n
+    p2(i) = derivative(list(distfun_chi2cdf,k),x(i));
+end
+assert_checkalmostequal ( p1 , p2 , 1.e-5 , [] , "element");

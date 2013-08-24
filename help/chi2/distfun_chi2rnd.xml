@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ *
+ * This help file was generated from distfun_chi2rnd.sci using help_from_sci().
+ *
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="distfun_chi2rnd" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+
+  <refnamediv>
+    <refname>distfun_chi2rnd</refname><refpurpose>Chi-Square random numbers</refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   R = distfun_chi2rnd(k)
+   R = distfun_chi2rnd(k,v)
+   R = distfun_chi2rnd(k,m,n)
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>k :</term>
+      <listitem><para> a 1x1 or nxm matrix of doubles, the number of degrees of freedom. k belongs to the set {1,2,3.......}</para></listitem></varlistentry>
+   <varlistentry><term>v :</term>
+      <listitem><para> a 1x2 or 2x1 matrix of doubles, the size of R</para></listitem></varlistentry>
+   <varlistentry><term>v(1) :</term>
+      <listitem><para> the number of rows of R</para></listitem></varlistentry>
+   <varlistentry><term>v(2) :</term>
+      <listitem><para> the number of columns of R</para></listitem></varlistentry>
+   <varlistentry><term>m :</term>
+      <listitem><para> a 1x1 matrix of floating point integers, the number of rows of R</para></listitem></varlistentry>
+   <varlistentry><term>n :</term>
+      <listitem><para> a 1x1 matrix of floating point integers, the number of columns of R</para></listitem></varlistentry>
+   <varlistentry><term>R:</term>
+      <listitem><para> a matrix of doubles, the positive random numbers.</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+Generates random variables from the Chi-Sqaure distribution function.
+   </para>
+   <para>
+Any scalar input argument is expanded to a matrix of doubles
+of the same size as the other input arguments.
+   </para>
+   <para>
+As a side effect, it modifies the internal seed of the grand function.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+// set the initial seed for tests
+distfun_seedset(1);
+// Test with expanded k
+computed = distfun_chi2rnd((1:6))
+expected = [1.8608435 1.2995079 2.8402769 0.9538728 4.5217814 2.9898461]
+
+// Check R = distfun_geornd(k,v)
+computed = distfun_chi2rnd(2,[4 5])
+
+// Check mean and variance
+N = 50000;
+k = 3;
+computed = distfun_chi2rnd(k,[1 N]);
+c = mean(computed(1:N))
+d = st_deviation(computed(1:N) )
+[M,V] = distfun_chi2stat (k)
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Bibliography</title>
+   <para>http://en.wikipedia.org/wiki/Chi-squared_distribution</para>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Copyright (C) 2012 - Prateek Papriwal</member>
+   </simplelist>
+</refsection>
+</refentry>

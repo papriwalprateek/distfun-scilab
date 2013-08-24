@@ -1,0 +1,58 @@
+// Copyright (C) 2012 - Prateek Papriwal
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at
+// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+// <-- JVM NOT MANDATORY -->
+// <-- ENGLISH IMPOSED -->
+//
+// Check empty matrix
+x = distfun_chi2inv ( [] , []);
+assert_checkequal ( x , [] );
+//
+// Test with p scalar, k scalar
+computed = distfun_chi2inv(0.4,5);
+expected = 3.6554996;
+assert_checkalmostequal(computed,expected,1.e-8);
+//
+// Test with expanded p, k scalar
+computed = distfun_chi2inv([0.2 0.6],5);
+expected = [2.3425343 5.1318671];
+assert_checkalmostequal(computed,expected,1.e-8);
+//
+// Test with p scalar, k expanded
+computed = distfun_chi2inv(0.44,[4 7]);
+expected = [2.9870195 5.827751];
+assert_checkalmostequal(computed,expected,1.e-8);
+// 
+// Test with both p,k expanded
+computed = distfun_chi2inv([0.22 0.66],[3 4])
+ computed  =
+ 
+    1.0878828    4.5215487  
+expected = [1.0878828 4.5215487]
+ expected  =
+ 
+    1.0878828    4.5215487  
+assert_checkalmostequal(computed,expected,1.e-8);
+//
+//
+// Check vectorisation
+k = 7;
+p = linspace(0.1,0.9,10);
+x1 = distfun_chi2inv(p,k);
+x2 = [];
+for i=1:10
+    x2(1,i) = distfun_chi2inv(p(i),k);
+end
+assert_checkalmostequal(x1,x2);
+//
+// Test small values of p
+x = distfun_chi2inv(1.e-10,6);
+expected = 1.687221124969454956D-03;
+assert_checkalmostequal(x,expected);
+x = distfun_chi2inv(1.e-10,6,%f);
+expected = 5.829180295765903708D+01;
+assert_checkalmostequal(x,expected);
